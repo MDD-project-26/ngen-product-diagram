@@ -1,0 +1,361 @@
+[
+  {
+    "id": "6347:35489",
+    "name": "Frame 1171277737",
+    "rect": {
+      "x": 480,
+      "y": 1164,
+      "width": 4020,
+      "height": 3055
+    },
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "dashPattern": [],
+    "children": [
+      {
+        "id": "6347:35532",
+        "type": "FRAME",
+        "x": 24,
+        "y": 24,
+        "width": 173,
+        "height": 32
+      },
+      {
+        "id": "6347:35538",
+        "type": "FRAME",
+        "x": 120,
+        "y": 724,
+        "width": 3780,
+        "height": 2211
+      }
+    ]
+  },
+  {
+    "id": "6347:35532",
+    "name": "SG CONNECT _ long 1",
+    "rect": {
+      "x": 504,
+      "y": 1188,
+      "width": 173,
+      "height": 32
+    },
+    "strokeWeight": 0.05000000074505806,
+    "strokeAlign": "INSIDE",
+    "dashPattern": [],
+    "children": [
+      {
+        "id": "6347:35533",
+        "type": "VECTOR",
+        "x": 0.0078125,
+        "y": 0,
+        "width": 21.882545471191406,
+        "height": 32.02995681762695
+      },
+      {
+        "id": "6347:35534",
+        "type": "VECTOR",
+        "x": 22.40234375,
+        "y": -0.00048828125,
+        "width": 27.457889556884766,
+        "height": 31.996706008911133
+      },
+      {
+        "id": "6347:35535",
+        "type": "VECTOR",
+        "x": 52.75390625,
+        "y": 0.01123046875,
+        "width": 120.24555969238281,
+        "height": 31.93634796142578
+      },
+      {
+        "id": "6347:35536",
+        "type": "VECTOR",
+        "x": 78.22265625,
+        "y": 12.701171875,
+        "width": 7.643187999725342,
+        "height": 8.00232982635498
+      }
+    ]
+  },
+  {
+    "id": "6347:35538",
+    "name": "Frame 1171277737",
+    "rect": {
+      "x": 600,
+      "y": 1888,
+      "width": 3780,
+      "height": 2211
+    },
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "dashPattern": [
+      10,
+      10
+    ],
+    "children": [
+      {
+        "id": "6347:35539",
+        "type": "INSTANCE",
+        "x": 10,
+        "y": 10,
+        "width": 122,
+        "height": 28
+      },
+      {
+        "id": "6347:35540",
+        "type": "INSTANCE",
+        "x": 318,
+        "y": 59,
+        "width": 87,
+        "height": 28
+      },
+      {
+        "id": "6347:35541",
+        "type": "INSTANCE",
+        "x": 599,
+        "y": 59,
+        "width": 80,
+        "height": 28
+      }
+    ]
+  },
+  {
+    "id": "6347:35539",
+    "name": "Tag",
+    "rect": {
+      "x": 610,
+      "y": 1898,
+      "width": 122,
+      "height": 28
+    },
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "dashPattern": [],
+    "children": [
+      {
+        "id": "I6347:35539;1335:21022",
+        "type": "TEXT",
+        "x": 8,
+        "y": 8,
+        "width": 12,
+        "height": 12,
+        "text": "home_work",
+        "fontName": {
+          "family": "Material Symbols Rounded",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "GRAD": 0,
+            "FILL": 0
+          }
+        },
+        "fontSize": 12,
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 100
+        }
+      },
+      {
+        "id": "I6347:35539;1335:20990",
+        "type": "TEXT",
+        "x": 26,
+        "y": 8,
+        "width": 84,
+        "height": 12,
+        "text": "AT YOUR site",
+        "fontName": {
+          "family": "Geist Mono",
+          "style": "SemiBold",
+          "variationSettings": {
+            "wght": 600
+          }
+        },
+        "fontSize": 12,
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 100
+        }
+      }
+    ]
+  },
+  {
+    "id": "6347:35540",
+    "name": "Tag",
+    "rect": {
+      "x": 918,
+      "y": 1947,
+      "width": 87,
+      "height": 28
+    },
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "dashPattern": [],
+    "children": [
+      {
+        "id": "I6347:35540;1335:21022",
+        "type": "TEXT",
+        "x": 8,
+        "y": 8,
+        "width": 12,
+        "height": 12,
+        "text": "partly_cloudy_day",
+        "fontName": {
+          "family": "Material Symbols Rounded",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "GRAD": 0,
+            "FILL": 0
+          }
+        },
+        "fontSize": 12,
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 100
+        }
+      },
+      {
+        "id": "I6347:35540;1335:20990",
+        "type": "TEXT",
+        "x": 26,
+        "y": 8,
+        "width": 49,
+        "height": 12,
+        "text": "Weather",
+        "fontName": {
+          "family": "Geist Mono",
+          "style": "SemiBold",
+          "variationSettings": {
+            "wght": 600
+          }
+        },
+        "fontSize": 12,
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 100
+        }
+      }
+    ]
+  },
+  {
+    "id": "6347:35541",
+    "name": "Tag",
+    "rect": {
+      "x": 1199,
+      "y": 1947,
+      "width": 80,
+      "height": 28
+    },
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "dashPattern": [],
+    "children": [
+      {
+        "id": "I6347:35541;1335:21022",
+        "type": "TEXT",
+        "x": 8,
+        "y": 8,
+        "width": 12,
+        "height": 12,
+        "text": "euro_symbol",
+        "fontName": {
+          "family": "Material Symbols Rounded",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "GRAD": 0,
+            "FILL": 0
+          }
+        },
+        "fontSize": 12,
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 100
+        }
+      },
+      {
+        "id": "I6347:35541;1335:20990",
+        "type": "TEXT",
+        "x": 26,
+        "y": 8,
+        "width": 42,
+        "height": 12,
+        "text": "Prices",
+        "fontName": {
+          "family": "Geist Mono",
+          "style": "SemiBold",
+          "variationSettings": {
+            "wght": 600
+          }
+        },
+        "fontSize": 12,
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 100
+        }
+      }
+    ]
+  },
+  {
+    "id": "6256:25075",
+    "name": "Frame 1171277722",
+    "rect": {
+      "x": 955,
+      "y": 2023,
+      "width": 14,
+      "height": 40
+    },
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "dashPattern": [],
+    "children": [
+      {
+        "id": "6256:25076",
+        "type": "VECTOR",
+        "x": 13.999998092651367,
+        "y": 0,
+        "width": 14,
+        "height": 13.999998092651367
+      },
+      {
+        "id": "6256:25077",
+        "type": "RECTANGLE",
+        "x": 6,
+        "y": 14,
+        "width": 2,
+        "height": 26
+      }
+    ]
+  },
+  {
+    "id": "6256:25085",
+    "name": "Frame 1171277722",
+    "rect": {
+      "x": 1232,
+      "y": 2023,
+      "width": 14,
+      "height": 40
+    },
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "dashPattern": [],
+    "children": [
+      {
+        "id": "6256:25086",
+        "type": "VECTOR",
+        "x": 13.999998092651367,
+        "y": 0,
+        "width": 14,
+        "height": 13.999998092651367
+      },
+      {
+        "id": "6256:25087",
+        "type": "RECTANGLE",
+        "x": 6,
+        "y": 14,
+        "width": 2,
+        "height": 26
+      }
+    ]
+  }
+]

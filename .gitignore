@@ -8,3 +8,4 @@ playwright-report/
 !.env.example
 design-reference/*
 !design-reference/figma-geometry.json
+!design-reference/figma-group-geometry.json

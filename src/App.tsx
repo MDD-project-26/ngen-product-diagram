@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useMotionValueEvent, type MotionValue } from '
 import { nodes, type DiagramNode } from './data';
 import ProductNode, { AppCard, type InfoRequest } from './DiagramNode';
 import DesignLayers from './DesignLayers';
+import DiagramGroups from './DiagramGroups';
 import { useCanvas, MIN_ZOOM, MAX_ZOOM } from './useCanvas';
 import { useFullscreen } from './useFullscreen';
 import './design-layers.css';
@@ -73,6 +74,7 @@ export default function App() {
       <motion.div className="diagram-pan" style={{left:canvas.x,top:canvas.y}}>
       {/* Keep one uniform scale, without a persistent compositing hint that caches a low-resolution surface. */}
       <motion.div className="diagram-world" style={{scale:canvas.scale}}>
+        <DiagramGroups/>
         <DesignLayers/>
         {nodes.map(node=><ProductNode key={node.id} node={node} onInfo={showInfo} onInfoLeave={hideInfo} onInfoToggle={toggleInfo} onFocusNode={focusNode} activeInfo={info?.node.id}/>)}
         <AppCard onFocusNode={focusNode}/>

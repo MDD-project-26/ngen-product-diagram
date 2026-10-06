@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 
 type ReferenceRect={x:number;y:number;width:number;height:number};
 const figmaGeometry=JSON.parse(readFileSync('design-reference/figma-geometry.json','utf8')) as {root:ReferenceRect&{id:string};layers:(ReferenceRect&{name:string;text?:string})[]}[];
+const figmaGroups=JSON.parse(readFileSync('design-reference/figma-group-geometry.json','utf8')) as {id:string;rect:ReferenceRect}[];
 
 const transform = (page:Page) => page.locator('.diagram-world').evaluate(el=>{
   const pan=getComputedStyle(el.parentElement!);
@@ -22,12 +23,12 @@ test('all Figma assets and fonts load; the overview fits the responsive module',
   await expect.poll(()=>page.evaluate(()=>[...document.images].every(i=>i.complete&&i.naturalWidth>0))).toBe(true);
   const assets=await page.evaluate(()=>[...document.images].map(i=>({src:i.getAttribute('src'),w:i.getBoundingClientRect().width,h:i.getBoundingClientRect().height})));
   expect(assets.every(i=>i.src?.startsWith('/assets/')&&i.w>0&&i.h>0)).toBe(true);
-  expect(new Set(assets.map(i=>i.src)).size).toBe(25);
+  expect(new Set(assets.map(i=>i.src)).size).toBe(26);
   expect(await page.evaluate(()=>[...document.images].filter(i=>i.src.endsWith('.svg')).every(i=>Math.abs(parseFloat(getComputedStyle(i).width)-i.naturalWidth)<0.1&&Math.abs(parseFloat(getComputedStyle(i).height)-i.naturalHeight)<0.1))).toBe(true);
   expect(await page.evaluate(()=>document.fonts.check('500 48px Inter')&&document.fonts.check('600 12px "Geist Mono"')&&document.fonts.check('400 12px "Material Symbols Rounded"'))).toBe(true);
   const geometry=await page.evaluate(()=>{
     const canvas=document.querySelector('.canvas-viewport')!.getBoundingClientRect();
-    return {fits:[...document.querySelectorAll('[data-product]')].every(n=>{const r=n.getBoundingClientRect();return r.left>=canvas.left&&r.right<=canvas.right&&r.top>=canvas.top&&r.bottom<=canvas.bottom;}),overflow:document.documentElement.scrollWidth>innerWidth,canvasBottom:canvas.bottom,height:innerHeight};
+    return {fits:[...document.querySelectorAll('[data-product],.connect-group')].every(n=>{const r=n.getBoundingClientRect();return r.left>=canvas.left&&r.right<=canvas.right&&r.top>=canvas.top&&r.bottom<=canvas.bottom;}),overflow:document.documentElement.scrollWidth>innerWidth,canvasBottom:canvas.bottom,height:innerHeight};
   });
   expect(geometry.fits).toBe(true);expect(geometry.overflow).toBe(false);expect(geometry.canvasBottom).toBeLessThanOrEqual(geometry.height);
   expect(errors).toEqual([]);
@@ -144,7 +145,7 @@ test('native trackpad gestures avoid double zoom and reduced motion has no smoot
 test('text, artwork, cards and connectors keep identical proportions from 5% to 200%',async({page})=>{
   const sizes=()=>page.locator('.diagram-world').evaluate(world=>{
     const scale=new DOMMatrix(getComputedStyle(world).transform).a;
-    return [...world.querySelectorAll('.product-node,.node-image,.node-copy h2,.node-copy p,.action,.app-card,.app-copy h2,.feature-row,.design-layers p,.design-layers img')].map(el=>{
+    return [...world.querySelectorAll('.product-node,.node-image,.node-copy h2,.node-copy p,.action,.app-card,.app-copy h2,.feature-row,.design-layers p,.design-layers img,.diagram-groups div,.diagram-groups img,.diagram-groups svg,.group-tag span')].map(el=>{
       const r=el.getBoundingClientRect();return {width:r.width/scale,height:r.height/scale};
     });
   });
@@ -171,6 +172,27 @@ test('text, artwork, cards and connectors keep identical proportions from 5% to 
   await expect(page.getByRole('button',{name:'Zoom in',exact:true})).toBeDisabled();
   await page.locator('.canvas-viewport').press('+');await settle(page);
   expect((await transform(page)).scale).toBe(2);
+});
+
+test('updated groupings, tags and input arrows match measured Figma geometry',async({page})=>{
+  const actual=await page.evaluate(groups=>{
+    const world=document.querySelector('.diagram-world')!,origin=world.getBoundingClientRect();
+    const scale=new DOMMatrix(getComputedStyle(world).transform).a;
+    return groups.map(({id})=>{
+      const r=document.querySelector('[data-node-id="'+id+'"]')!.getBoundingClientRect();
+      return {x:(r.x-origin.x)/scale,y:(r.y-origin.y)/scale,width:r.width/scale,height:r.height/scale};
+    });
+  },figmaGroups);
+  actual.forEach((rect,i)=>{
+    for(const key of ['x','y','width','height'] as const)
+      expect(Math.abs(rect[key]-figmaGroups[i].rect[key]),figmaGroups[i].id+' '+key).toBeLessThan(.1);
+  });
+  await expect(page.locator('.group-tag')).toHaveCount(3);
+  await expect(page.getByText('Weather',{exact:true})).toHaveCount(1);
+  await expect(page.getByText('Prices',{exact:true})).toHaveCount(1);
+  expect(await page.locator('.group-tag .material-symbol').evaluateAll(icons=>icons.every(icon=>Math.abs(parseFloat(getComputedStyle(icon).width)-12)<.1))).toBe(true);
+  await expect(page.locator('.connect-group')).toHaveCSS('background-color','rgb(240, 252, 238)');
+  await expect(page.locator('.site-group-outline rect')).toHaveAttribute('stroke-dasharray','10 10');
 });
 
 test('card interiors match the measured Figma geometry',async({page})=>{
