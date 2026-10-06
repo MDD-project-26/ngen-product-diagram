@@ -10,10 +10,132 @@ const transform = (page:Page) => page.locator('.diagram-world').evaluate(el=>{
   return {x:parseFloat(pan.left),y:parseFloat(pan.top),scale:new DOMMatrix(getComputedStyle(el).transform).a};
 });
 const settle = async(page:Page) => {await page.waitForTimeout(420);};
+const modifierKey = (page:Page) => page.evaluate(()=>/Mac|iPhone|iPad/.test(navigator.platform)?'Meta':'Control');
+const holdModifier = async(page:Page) => {await page.keyboard.down(await modifierKey(page));};
 
 test.beforeEach(async({page})=>{
   await page.goto('/');
   await page.evaluate(()=>document.fonts.ready);
+});
+
+const enterFullscreen = async(page:Page) => {
+  await page.keyboard.up(await modifierKey(page));
+  await page.getByRole('button',{name:'Enter full screen',exact:true}).click();
+  await expect.poll(()=>page.locator('.canvas-viewport').boundingBox()).toEqual({x:0,y:0,...page.viewportSize()!});
+};
+
+for(const os of [{platform:'MacIntel',key:'Meta',wrong:'Control',label:'Cmd'},{platform:'Win32',key:'Control',wrong:'Meta',label:'Ctrl'}]){
+  test(os.label+' scroll zoom, free drag and canvas-only pinch guidance match Figma',async({page})=>{
+    await page.addInitScript(platform=>Object.defineProperty(navigator,'platform',{get:()=>platform}),os.platform);
+    await page.reload();await page.evaluate(()=>document.fonts.ready);
+    const hint=page.locator('#canvas-instructions'),overlay=page.locator('.pinch-guidance'),canvas=page.locator('.canvas-viewport');
+    await expect(hint).toHaveText('Drag to pan '+os.label+' + scroll to zoom');
+    await expect(hint.locator('.command-icon')).toHaveCount(os.label==='Cmd'?1:0);
+    await expect(overlay).toHaveCount(0);
+    await expect(canvas).toHaveCSS('touch-action','pan-x pan-y');
+    await expect(page.getByRole('button',{name:'Zoom in',exact:true})).toBeEnabled();
+    const start=await transform(page),v=(await canvas.boundingBox())!;
+    await page.mouse.move(v.x+v.width-60,v.y+v.height*.5);await page.mouse.down();await page.mouse.move(v.x+v.width-100,v.y+v.height*.5+30,{steps:3});await page.mouse.up();
+    expect((await transform(page)).x-start.x).toBeCloseTo(-40,1);
+    expect((await transform(page)).y-start.y).toBeCloseTo(30,1);
+    const dragged=await transform(page);
+    const claimed=await canvas.evaluate(el=>!el.dispatchEvent(new WheelEvent('wheel',{bubbles:true,cancelable:true,ctrlKey:true,deltaY:-20})));
+    expect(claimed).toBe(true);await expect(overlay).toBeVisible();
+    await expect(overlay.getByRole('status')).toHaveText(os.label+' + scroll to zoom');
+    await expect(overlay).toHaveCSS('background-color','rgba(0, 0, 0, 0.4)');
+    await expect(overlay).toHaveCSS('pointer-events','none');
+    const o=(await overlay.boundingBox())!;
+    expect(o.x-v.x).toBeCloseTo(6,1);expect(o.y-v.y).toBeCloseTo(6,1);
+    expect(o.width).toBeCloseTo(v.width-12,1);expect(o.height).toBeCloseTo(v.height-12,1);
+    expect(o.y).toBeGreaterThan(((await page.locator('.module-header').boundingBox())!).y+((await page.locator('.module-header').boundingBox())!).height);
+    await settle(page);expect(await transform(page)).toEqual(dragged);
+    await page.keyboard.down(os.wrong);
+    // The wrong OS key cannot zoom the embedded diagram.
+    await page.mouse.wheel(0,-20);await settle(page);expect(await transform(page)).toEqual(dragged);
+    await page.keyboard.up(os.wrong);await page.keyboard.down(os.key);
+    await expect(overlay).toHaveCount(0);
+    await page.mouse.wheel(0,-20);await settle(page);
+    const zoomed=await transform(page);expect(zoomed.scale).toBeGreaterThan(dragged.scale);
+    // Native Safari pinch is blocked even with the correct modifier held.
+    await canvas.evaluate(el=>{
+      el.dispatchEvent(Object.assign(new Event('gesturestart',{bubbles:true,cancelable:true}),{scale:1}));
+      el.dispatchEvent(Object.assign(new Event('gesturechange',{bubbles:true,cancelable:true}),{scale:2}));
+      el.dispatchEvent(new Event('gestureend',{bubbles:true,cancelable:true}));
+    });
+    await expect(overlay).toBeVisible();await settle(page);expect(await transform(page)).toEqual(zoomed);
+    await expect(overlay).toHaveCount(0,{timeout:3500});
+    // Releasing the key stops scroll smoothing but does not interrupt mouse drag.
+    await canvas.evaluate(el=>el.dispatchEvent(new WheelEvent('wheel',{bubbles:true,cancelable:true,deltaY:-100})));
+    await page.keyboard.up(os.key);await page.waitForTimeout(30);
+    const stopped=await transform(page);await page.waitForTimeout(160);expect(await transform(page)).toEqual(stopped);
+    await page.keyboard.down(os.key);
+    await page.mouse.down();await page.keyboard.up(os.key);await page.mouse.move(v.x+v.width-150,v.y+v.height*.5+70,{steps:3});await page.mouse.up();
+    expect(await transform(page)).not.toEqual(stopped);
+    const afterDrag=await transform(page);
+    await page.evaluate(()=>{const footer=document.createElement('div');footer.style.height='1200px';document.body.append(footer);});
+    await page.mouse.wheel(0,180);await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(0);
+    expect(await transform(page)).toEqual(afterDrag);await expect(overlay).toHaveCount(0);
+  });
+}
+
+test('embedded touch pinch shows guidance without changing camera or browser zoom',async({page})=>{
+  const canvas=page.locator('.canvas-viewport'),before=await transform(page);
+  await canvas.evaluate(el=>{
+    for(const [pointerId,clientX] of [[1,100],[2,200]])el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',pointerId,clientX,clientY:400}));
+  });
+  await expect(page.locator('.pinch-guidance')).toHaveCount(0);
+  await canvas.evaluate(el=>{
+    el.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,pointerType:'touch',pointerId:2,clientX:250,clientY:400}));
+    for(const pointerId of [1,2])el.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'touch',pointerId}));
+  });
+  await expect(page.locator('.pinch-guidance')).toBeVisible();expect(await transform(page)).toEqual(before);
+  await holdModifier(page);await page.keyboard.up(await modifierKey(page));
+  await expect(page.locator('.pinch-guidance')).toHaveCount(0);
+  const browserScale=await page.evaluate(()=>visualViewport!.scale);
+  const session=await page.context().newCDPSession(page);
+  await session.send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:2});
+  const r=(await canvas.boundingBox())!,cx=r.x+r.width/2,cy=r.y+r.height/2;
+  await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:cx-30,y:cy,id:1},{x:cx+30,y:cy,id:2}]});
+  for(let i=1;i<=6;i++)await session.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:cx-30-i*6,y:cy,id:1},{x:cx+30+i*6,y:cy,id:2}]});
+  await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+  await settle(page);expect(await transform(page)).toEqual(before);
+  expect(await page.evaluate(()=>visualViewport!.scale)).toBe(browserScale);
+  await expect(page.locator('.pinch-guidance')).toBeVisible();
+  await enterFullscreen(page);await expect(page.locator('.pinch-guidance')).toHaveCount(0);
+});
+
+test('fullscreen allows pan, buttons and pinch without a modifier; embedded touch scrolls the page',async({page})=>{
+  await page.keyboard.up(await modifierKey(page));
+  const embedded=await transform(page),copy=await page.locator('#canvas-instructions').textContent();
+  await page.getByRole('button',{name:'Enter full screen',exact:true}).click();
+  await expect.poll(()=>page.locator('.canvas-viewport').boundingBox()).toEqual({x:0,y:0,...page.viewportSize()!});
+  await expect(page.getByRole('button',{name:'Zoom in',exact:true})).toBeEnabled();
+  await expect(page.locator('#canvas-instructions')).toHaveText(copy!);
+  const before=await transform(page),v=(await page.locator('.canvas-viewport').boundingBox())!;
+  await page.mouse.move(v.width-60,v.height*.5);await page.mouse.down();await page.mouse.move(v.width-110,v.height*.5+30,{steps:4});await page.mouse.up();
+  expect((await transform(page)).x-before.x).toBeCloseTo(-50,1);
+  await page.mouse.wheel(70,150);await settle(page);
+  expect((await transform(page)).y-before.y).toBeLessThan(0);
+  await page.getByRole('button',{name:'Zoom in',exact:true}).click();await settle(page);
+  expect((await transform(page)).scale).toBeGreaterThan(embedded.scale);
+  const zoomed=await transform(page);
+  await page.locator('.canvas-viewport').evaluate(el=>el.dispatchEvent(new WheelEvent('wheel',{bubbles:true,cancelable:true,ctrlKey:true,deltaY:-20,clientX:innerWidth/2,clientY:innerHeight/2})));
+  await settle(page);expect((await transform(page)).scale).toBeGreaterThan(zoomed.scale);
+  await page.getByRole('button',{name:'Exit full screen',exact:true}).click();
+  await expect(page.locator('.canvas-viewport')).not.toHaveClass(/is-expanded/);
+  await expect(page.getByRole('button',{name:'Zoom in',exact:true})).toBeEnabled();
+  await expect(page.locator('#canvas-instructions')).toHaveText(copy!);
+  await expect(page.locator('.canvas-viewport')).toHaveCSS('touch-action','pan-x pan-y');
+  await page.evaluate(()=>{const footer=document.createElement('div');footer.style.height='1200px';document.body.append(footer);});
+  const session=await page.context().newCDPSession(page);
+  await session.send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:2});
+  const rect=(await page.locator('.canvas-viewport').boundingBox())!,locked=await transform(page);
+  const x=rect.x+rect.width*.85,y=rect.y+rect.height*.65;
+  await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:1}]});
+  for(let i=1;i<=8;i++)await session.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y:y-i*18,id:1}]});
+  await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+  await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(0);
+  expect(await transform(page)).toEqual(locked);
 });
 
 test('all Figma assets and fonts load; the overview fits the responsive module',async({page})=>{
@@ -23,7 +145,8 @@ test('all Figma assets and fonts load; the overview fits the responsive module',
   await expect.poll(()=>page.evaluate(()=>[...document.images].every(i=>i.complete&&i.naturalWidth>0))).toBe(true);
   const assets=await page.evaluate(()=>[...document.images].map(i=>({src:i.getAttribute('src'),w:i.getBoundingClientRect().width,h:i.getBoundingClientRect().height})));
   expect(assets.every(i=>i.src?.startsWith('/assets/')&&i.w>0&&i.h>0)).toBe(true);
-  expect(new Set(assets.map(i=>i.src)).size).toBe(26);
+  expect(new Set(assets.filter(i=>!i.src?.startsWith('/assets/command-')).map(i=>i.src)).size).toBe(26);
+  expect(assets.filter(i=>i.src?.startsWith('/assets/command-')).length).toBe(await page.evaluate(()=>/Mac|iPhone|iPad/.test(navigator.platform)?1:0));
   expect(await page.evaluate(()=>[...document.images].filter(i=>i.src.endsWith('.svg')).every(i=>Math.abs(parseFloat(getComputedStyle(i).width)-i.naturalWidth)<0.1&&Math.abs(parseFloat(getComputedStyle(i).height)-i.naturalHeight)<0.1))).toBe(true);
   expect(await page.evaluate(()=>document.fonts.check('500 48px Inter')&&document.fonts.check('600 12px "Geist Mono"')&&document.fonts.check('400 12px "Material Symbols Rounded"'))).toBe(true);
   const geometry=await page.evaluate(()=>{
@@ -43,7 +166,7 @@ test('zoom, pan, wheel zoom, fit and keyboard controls work',async({page})=>{
   await page.mouse.move(viewport.x+viewport.width-60,viewport.y+120);
   await page.mouse.down();await page.mouse.move(viewport.x+viewport.width-130,viewport.y+160,{steps:10});await page.mouse.up();
   const after=await transform(page);expect(after.x-before.x).toBeCloseTo(-70,1);expect(after.y-before.y).toBeCloseTo(40,1);
-  await page.keyboard.down('Control');await page.mouse.wheel(0,-40);await page.keyboard.up('Control');await settle(page);
+  await holdModifier(page);await page.mouse.wheel(0,-40);await settle(page);await page.keyboard.up(await modifierKey(page));
   expect((await transform(page)).scale).toBeGreaterThan(after.scale);
   await page.locator('.canvas-viewport').focus();await page.keyboard.press('0');await settle(page);
   expect((await transform(page)).scale).toBeCloseTo(start.scale,3);
@@ -54,6 +177,7 @@ test('zoom, pan, wheel zoom, fit and keyboard controls work',async({page})=>{
 });
 
 test('trackpad scrolling batches fractional input, preserves travel and normalizes wheel units',async({page})=>{
+  await enterFullscreen(page);
   const before=await transform(page);
   const batch=await page.locator('.canvas-viewport').evaluate(canvas=>{
     const pan=document.querySelector('.diagram-pan')!;
@@ -65,6 +189,7 @@ test('trackpad scrolling batches fractional input, preserves travel and normaliz
   expect(batch.prevented).toBe(true);expect(batch.immediate).toBe(batch.start);
   await expect.poll(async()=>Math.abs((await transform(page)).x-before.x+34.5)).toBeLessThan(0.02);
   await expect.poll(async()=>Math.abs((await transform(page)).y-before.y+103.5)).toBeLessThan(0.02);
+  await settle(page);
   const atRest=await transform(page);await page.waitForTimeout(150);
   expect(await transform(page)).toEqual(atRest);
   await page.locator('.canvas-viewport').evaluate(canvas=>canvas.dispatchEvent(new WheelEvent('wheel',{bubbles:true,cancelable:true,deltaY:2,deltaMode:1,shiftKey:true})));
@@ -76,6 +201,7 @@ test('trackpad scrolling batches fractional input, preserves travel and normaliz
 });
 
 test('trackpad pinch stays anchored throughout smoothing, reverses and cancels on drag',async({page})=>{
+  await enterFullscreen(page);
   await page.locator('.zoom-value').click();await settle(page);
   const before=await transform(page);
   const v=(await page.locator('.canvas-viewport').boundingBox())!;
@@ -112,6 +238,7 @@ test('trackpad pinch stays anchored throughout smoothing, reverses and cancels o
 });
 
 test('native trackpad gestures avoid double zoom and reduced motion has no smoothing tail',async({page})=>{
+  await enterFullscreen(page);
   const before=await transform(page),v=(await page.locator('.canvas-viewport').boundingBox())!;
   const point={x:v.width*.5,y:v.height*.5};
   const prevented=await page.locator('.canvas-viewport').evaluate((canvas,point)=>{
@@ -128,6 +255,7 @@ test('native trackpad gestures avoid double zoom and reduced motion has no smoot
   expect(after.x).toBeCloseTo(point.x+20-(point.x-before.x)*1.5,1);
   expect(after.y).toBeCloseTo(point.y+30-(point.y-before.y)*1.5,1);
   await page.emulateMedia({reducedMotion:'reduce'});await page.reload();
+  await enterFullscreen(page);
   const reduced=await transform(page);
   const samples=await page.locator('.canvas-viewport').evaluate(async canvas=>{
     canvas.dispatchEvent(new WheelEvent('wheel',{bubbles:true,cancelable:true,deltaX:100}));
@@ -155,9 +283,9 @@ test('text, artwork, cards and connectors keep identical proportions from 5% to 
     const v=(await page.locator('.canvas-viewport').boundingBox())!;
     await page.mouse.move(v.x+v.width/2,v.y+v.height/2);
     const current=(await transform(page)).scale;
-    await page.keyboard.down('Control');
+    await holdModifier(page);
     await page.mouse.wheel(0,-Math.log(target/current)/0.012);
-    await page.keyboard.up('Control');
+    await settle(page);await page.keyboard.up(await modifierKey(page));
     await expect.poll(async()=>(await transform(page)).scale).toBeCloseTo(target,3);
     // Zoom can move a CTA under the pointer and trigger its separate hover animation.
     await page.mouse.move(0,0);
@@ -362,6 +490,9 @@ test('fullscreen respects reduced motion, resizing and Escape during a pending A
 
 test('touch drag and pinch move and scale the canvas',async({page,browserName})=>{
   test.skip(browserName!=='chromium');
+  await page.keyboard.up(await modifierKey(page));
+  await page.getByRole('button',{name:'Enter full screen',exact:true}).click();
+  await expect.poll(()=>page.locator('.canvas-viewport').boundingBox()).toEqual({x:0,y:0,...page.viewportSize()!});
   const session=await page.context().newCDPSession(page);
   await session.send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:2});
   const v=(await page.locator('.canvas-viewport').boundingBox())!;

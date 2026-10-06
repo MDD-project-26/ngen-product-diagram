@@ -10,6 +10,11 @@ import './design-layers.css';
 
 const tooltipTransition={duration:0.22,ease:[0.22,1,0.36,1] as [number,number,number,number]};
 
+function CommandIcon({variant='muted'}:{variant?:'muted'|'white'|'large-white'}) {
+  const size=variant==='large-white'?36:10;
+  return <img className="command-icon" src={'/assets/command-'+variant+'.svg'} width={size} height={size} alt="" aria-hidden="true" draggable={false}/>;
+}
+
 // Only the percentage subscribes to zoom frames; the diagram stays outside React updates.
 function ZoomControls({scale,zoomAt,onInteract}:{scale:MotionValue<number>;zoomAt:ReturnType<typeof useCanvas>['zoomAt'];onInteract:()=>void}) {
   const [zoomState,setZoomState]=useState(()=>({zoom:Math.round(scale.get()*100),atMin:scale.get()<=MIN_ZOOM,atMax:scale.get()>=MAX_ZOOM}));
@@ -35,10 +40,10 @@ function Tooltip({info,onEnter,onLeave}:{info:InfoRequest;onEnter:()=>void;onLea
 }
 
 export default function App() {
-  const canvas=useCanvas();
   const module=useRef<HTMLElement>(null);
   const frame=useRef<HTMLDivElement>(null);
   const fullscreen=useFullscreen(module,frame);
+  const canvas=useCanvas(fullscreen.active);
   const [info,setInfo]=useState<InfoRequest|null>(null);
   const pinned=useRef(false);
   const closeTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
@@ -68,7 +73,7 @@ export default function App() {
   return <main ref={module} className="module">
     <motion.header className="module-header" animate={{opacity:fullscreen.active?0:1}} transition={{duration:0.25,ease:[0.22,1,0.36,1]}}><h1><span>How is NGEN’s</span><br/>SG Connect structured?</h1><p>How the aggregator operates the SG Connect product to turn distributed assets into tradable flexibility. Check any block for details.</p></motion.header>
     <div ref={frame} className="canvas-frame">
-    <motion.div ref={canvas.viewport} style={fullscreen.style} className={'canvas-viewport'+(canvas.dragging?' is-dragging':'')+(fullscreen.expanded?' is-expanded':'')} tabIndex={0} role="region" aria-label="Interactive SG Connect product diagram" aria-describedby="canvas-instructions" {...canvas.handlers}>
+    <motion.div ref={canvas.viewport} style={fullscreen.style} className={'canvas-viewport'+(fullscreen.active?' is-interactive':'')+(canvas.pinchHint?' has-pinch-hint':'')+(canvas.dragging?' is-dragging':'')+(fullscreen.expanded?' is-expanded':'')} tabIndex={0} role="region" aria-label="Interactive SG Connect product diagram" aria-describedby="canvas-instructions" {...canvas.handlers}>
       <div className="canvas-tag" data-canvas-controls><span className="material-symbol" aria-hidden="true">hub</span> Product diagram</div>
       <motion.button type="button" className="fullscreen-button" data-canvas-controls aria-label={fullscreen.active?'Exit full screen':'Enter full screen'} aria-pressed={fullscreen.active} disabled={fullscreen.busy} onClick={()=>{dismissInfo();void fullscreen.toggle();}} whileHover={{scale:1.035}} whileTap={{scale:0.98}} transition={{duration:0.2,ease:[0.22,1,0.36,1]}}>{fullscreen.active?'Exit fullscreen':'Fullscreen'}<span className="material-symbol" aria-hidden="true">{fullscreen.active?'fullscreen_exit':'fullscreen'}</span></motion.button>
       <motion.div className="diagram-pan" style={{left:canvas.x,top:canvas.y}}>
@@ -81,9 +86,12 @@ export default function App() {
         <AnimatePresence>{info&&!canvas.dragging?<Tooltip key={info.node.id} info={info} onEnter={clearClose} onLeave={hideInfo}/>:null}</AnimatePresence>
       </motion.div>
       </motion.div>
+      <AnimatePresence>{canvas.pinchHint&&!fullscreen.active?<motion.div className="pinch-guidance" data-node-id="6376:25167" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={tooltipTransition}>
+        <div className="pinch-guidance-message" role="status" data-node-id="6378:25180">{canvas.isMac?<CommandIcon variant="large-white"/>:null}<p data-node-id="6376:25172">{canvas.modifierKey} + scroll to zoom</p></div>
+      </motion.div>:null}</AnimatePresence>
       <div className="canvas-footer" data-canvas-controls>
-        <div className="canvas-hint"><span id="canvas-instructions" data-node-id="6338:35455">Drag to pan <span aria-hidden="true">·</span> Ctrl + scroll to zoom</span></div>
-        <ZoomControls scale={canvas.scale} zoomAt={canvas.zoomAt} onInteract={dismissInfo}/>
+        <div className="canvas-hint" id="canvas-instructions"><span className="drag-hint" data-node-id="6338:35455">Drag to pan</span>{' '}<span className="modifier-instruction" data-node-id="6378:25184">{canvas.isMac?<CommandIcon variant={canvas.pinchHint?'white':'muted'}/>:null}<span data-node-id="6378:25183">{canvas.modifierKey} + scroll to zoom</span></span></div>
+        <ZoomControls scale={canvas.scale} zoomAt={canvas.zoomAt} onInteract={()=>{dismissInfo();canvas.dismissPinchHint();}}/>
       </div>
     </motion.div>
     </div>
