@@ -1,0 +1,787 @@
+[
+  {
+    "root": {
+      "id": "6256:25233",
+      "name": "Shuffle Icon Card - Big",
+      "type": "FRAME",
+      "x": 2040,
+      "y": 2048,
+      "width": 900,
+      "height": 330
+    },
+    "layers": [
+      {
+        "id": "6256:25234",
+        "name": "Card Image",
+        "type": "FRAME",
+        "x": 2052,
+        "y": 2060,
+        "width": 306,
+        "height": 306
+      },
+      {
+        "id": "6256:25235",
+        "name": "Card Content",
+        "type": "FRAME",
+        "x": 2370,
+        "y": 2060,
+        "width": 558,
+        "height": 306
+      },
+      {
+        "id": "6256:25237",
+        "name": "Subheading",
+        "type": "TEXT",
+        "x": 2390,
+        "y": 2080,
+        "width": 518,
+        "height": 29,
+        "text": "SG Connect App",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 120.00000476837158
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": -2
+        }
+      },
+      {
+        "id": "6256:25244",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2412,
+        "y": 2153,
+        "width": 232,
+        "height": 21,
+        "text": "Live data",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Regular"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "6256:25247",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2676,
+        "y": 2153,
+        "width": 232,
+        "height": 21,
+        "text": "Alerts",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Regular"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "6256:25252",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2412,
+        "y": 2198,
+        "width": 232,
+        "height": 21,
+        "text": "My electricity prices",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Regular"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "6256:25255",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2676,
+        "y": 2198,
+        "width": 232,
+        "height": 21,
+        "text": "Peak shaving",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Regular"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "6256:25260",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2412,
+        "y": 2243,
+        "width": 232,
+        "height": 21,
+        "text": "Time-based control",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Regular"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "6256:25263",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2676,
+        "y": 2243,
+        "width": 232,
+        "height": 21,
+        "text": "Devices",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Regular"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "6256:25266",
+        "name": "Designed Button",
+        "type": "INSTANCE",
+        "x": 2390,
+        "y": 2308,
+        "width": 187,
+        "height": 38
+      }
+    ]
+  },
+  {
+    "root": {
+      "id": "6317:24582",
+      "name": "Node",
+      "type": "INSTANCE",
+      "x": 3580,
+      "y": 2111,
+      "width": 600,
+      "height": 204
+    },
+    "layers": [
+      {
+        "id": "I6317:24582;6256:24555",
+        "name": "Imge",
+        "type": "FRAME",
+        "x": 3592,
+        "y": 2123,
+        "width": 180,
+        "height": 180
+      },
+      {
+        "id": "I6317:24582;6225:24536",
+        "name": "Text Container",
+        "type": "FRAME",
+        "x": 3784,
+        "y": 2123,
+        "width": 384,
+        "height": 180
+      },
+      {
+        "id": "I6317:24582;6225:24537",
+        "name": "Subheading",
+        "type": "TEXT",
+        "x": 3804,
+        "y": 2143,
+        "width": 344,
+        "height": 29,
+        "text": "Supply / Offtake",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 120.00000476837158
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": -2
+        }
+      },
+      {
+        "id": "I6317:24582;6225:24538",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 3804,
+        "y": 2178,
+        "width": 344,
+        "height": 42,
+        "text": "Contract · Dynamic Pricing · Billing · Settlement of Rewards",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "I6317:24582;6256:25417",
+        "name": "Designed Button",
+        "type": "INSTANCE",
+        "x": 3804,
+        "y": 2245,
+        "width": 89,
+        "height": 38
+      }
+    ]
+  },
+  {
+    "root": {
+      "id": "6327:24664",
+      "name": "Node",
+      "type": "INSTANCE",
+      "x": 800,
+      "y": 600,
+      "width": 600,
+      "height": 204
+    },
+    "layers": [
+      {
+        "id": "I6327:24664;6256:24555",
+        "name": "Imge",
+        "type": "FRAME",
+        "x": 812,
+        "y": 612,
+        "width": 180,
+        "height": 180
+      },
+      {
+        "id": "I6327:24664;6225:24536",
+        "name": "Text Container",
+        "type": "FRAME",
+        "x": 1004,
+        "y": 612,
+        "width": 384,
+        "height": 180
+      },
+      {
+        "id": "I6327:24664;6225:24537",
+        "name": "Subheading",
+        "type": "TEXT",
+        "x": 1024,
+        "y": 674,
+        "width": 344,
+        "height": 29,
+        "text": "Electricity markets",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 120.00000476837158
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": -2
+        }
+      },
+      {
+        "id": "I6327:24664;6225:24538",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 1024,
+        "y": 709,
+        "width": 344,
+        "height": 21,
+        "text": "Intraday · aFRR · mFRR",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      }
+    ]
+  },
+  {
+    "root": {
+      "id": "6317:24598",
+      "name": "Node",
+      "type": "INSTANCE",
+      "x": 2190,
+      "y": 2898,
+      "width": 600,
+      "height": 204
+    },
+    "layers": [
+      {
+        "id": "I6317:24598;6256:24555",
+        "name": "Imge",
+        "type": "FRAME",
+        "x": 2202,
+        "y": 2910,
+        "width": 180,
+        "height": 180
+      },
+      {
+        "id": "I6317:24598;6225:24536",
+        "name": "Text Container",
+        "type": "FRAME",
+        "x": 2394,
+        "y": 2910,
+        "width": 384,
+        "height": 180
+      },
+      {
+        "id": "I6317:24598;6225:24537",
+        "name": "Subheading",
+        "type": "TEXT",
+        "x": 2414,
+        "y": 2930,
+        "width": 344,
+        "height": 29,
+        "text": "Synaptic",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 120.00000476837158
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": -2
+        }
+      },
+      {
+        "id": "I6317:24598;6225:24538",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2414,
+        "y": 2965,
+        "width": 344,
+        "height": 42,
+        "text": "On-site device (HW) - Control & Live data pass through here",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "I6317:24598;6256:25417",
+        "name": "Designed Button",
+        "type": "INSTANCE",
+        "x": 2414,
+        "y": 3032,
+        "width": 89,
+        "height": 38
+      }
+    ]
+  },
+  {
+    "root": {
+      "id": "6327:24682",
+      "name": "Node",
+      "type": "INSTANCE",
+      "x": 2190,
+      "y": 3622,
+      "width": 600,
+      "height": 204
+    },
+    "layers": [
+      {
+        "id": "I6327:24682;6256:24555",
+        "name": "Imge",
+        "type": "FRAME",
+        "x": 2202,
+        "y": 3634,
+        "width": 180,
+        "height": 180
+      },
+      {
+        "id": "I6327:24682;6225:24536",
+        "name": "Text Container",
+        "type": "FRAME",
+        "x": 2394,
+        "y": 3634,
+        "width": 384,
+        "height": 180
+      },
+      {
+        "id": "I6327:24682;6225:24537",
+        "name": "Subheading",
+        "type": "TEXT",
+        "x": 2414,
+        "y": 3654,
+        "width": 344,
+        "height": 29,
+        "text": "Your Home or Business",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 120.00000476837158
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": -2
+        }
+      },
+      {
+        "id": "I6327:24682;6225:24538",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2414,
+        "y": 3689,
+        "width": 344,
+        "height": 42,
+        "text": "Operates the platform, manages activations & trading",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "I6327:24682;6256:25417",
+        "name": "Designed Button",
+        "type": "INSTANCE",
+        "x": 2414,
+        "y": 3756,
+        "width": 89,
+        "height": 38
+      }
+    ]
+  },
+  {
+    "root": {
+      "id": "6256:25508",
+      "name": "Node",
+      "type": "INSTANCE",
+      "x": 2190,
+      "y": 1324,
+      "width": 600,
+      "height": 204
+    },
+    "layers": [
+      {
+        "id": "I6256:25508;6256:25383",
+        "name": "Imge",
+        "type": "FRAME",
+        "x": 2202,
+        "y": 1336,
+        "width": 180,
+        "height": 180
+      },
+      {
+        "id": "I6256:25508;6256:25352",
+        "name": "Text Container",
+        "type": "FRAME",
+        "x": 2390,
+        "y": 1336,
+        "width": 388,
+        "height": 180
+      },
+      {
+        "id": "I6256:25508;6256:25354",
+        "name": "Subheading",
+        "type": "TEXT",
+        "x": 2410,
+        "y": 1398,
+        "width": 348,
+        "height": 29,
+        "text": "SG Connect Flexibility (VPP)",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 120.00000476837158
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": -2
+        }
+      },
+      {
+        "id": "I6256:25508;6256:25355",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2410,
+        "y": 1433,
+        "width": 348,
+        "height": 21,
+        "text": "the pool acts as one power plant",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      }
+    ]
+  },
+  {
+    "root": {
+      "id": "6225:24589",
+      "name": "Node",
+      "type": "INSTANCE",
+      "x": 800,
+      "y": 2111,
+      "width": 600,
+      "height": 204
+    },
+    "layers": [
+      {
+        "id": "I6225:24589;6256:25383",
+        "name": "Imge",
+        "type": "FRAME",
+        "x": 812,
+        "y": 2123,
+        "width": 180,
+        "height": 180
+      },
+      {
+        "id": "I6225:24589;6256:25352",
+        "name": "Text Container",
+        "type": "FRAME",
+        "x": 1000,
+        "y": 2123,
+        "width": 388,
+        "height": 180
+      },
+      {
+        "id": "I6225:24589;6256:25354",
+        "name": "Subheading",
+        "type": "TEXT",
+        "x": 1020,
+        "y": 2154,
+        "width": 348,
+        "height": 29,
+        "text": "SG Brain",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 120.00000476837158
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": -2
+        }
+      },
+      {
+        "id": "I6225:24589;6256:25355",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 1020,
+        "y": 2189,
+        "width": 348,
+        "height": 21,
+        "text": "Optimisation every 15 minutes",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "I6225:24589;6256:25456",
+        "name": "Designed Button",
+        "type": "INSTANCE",
+        "x": 1020,
+        "y": 2234,
+        "width": 89,
+        "height": 38
+      }
+    ]
+  },
+  {
+    "root": {
+      "id": "6317:24563",
+      "name": "Node",
+      "type": "INSTANCE",
+      "x": 2190,
+      "y": 600,
+      "width": 600,
+      "height": 204
+    },
+    "layers": [
+      {
+        "id": "I6317:24563;6256:25349",
+        "name": "Imge",
+        "type": "FRAME",
+        "x": 2202,
+        "y": 612,
+        "width": 180,
+        "height": 180
+      },
+      {
+        "id": "I6317:24563;6256:25328",
+        "name": "Text Container",
+        "type": "FRAME",
+        "x": 2390,
+        "y": 612,
+        "width": 388,
+        "height": 180
+      },
+      {
+        "id": "I6317:24563;6256:25330",
+        "name": "Subheading",
+        "type": "TEXT",
+        "x": 2410,
+        "y": 632,
+        "width": 348,
+        "height": 29,
+        "text": "Aggregator",
+        "fontSize": 24,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 120.00000476837158
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": -2
+        }
+      },
+      {
+        "id": "I6317:24563;6256:25331",
+        "name": "Subtitle",
+        "type": "TEXT",
+        "x": 2410,
+        "y": 667,
+        "width": 348,
+        "height": 42,
+        "text": "Operates the platform, manages activations & trading",
+        "fontSize": 14,
+        "fontName": {
+          "family": "Inter Variable",
+          "style": "Medium"
+        },
+        "lineHeight": {
+          "unit": "PERCENT",
+          "value": 150
+        },
+        "letterSpacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      },
+      {
+        "id": "I6317:24563;6256:25445",
+        "name": "Designed Button",
+        "type": "INSTANCE",
+        "x": 2410,
+        "y": 734,
+        "width": 89,
+        "height": 38
+      }
+    ]
+  }
+]
