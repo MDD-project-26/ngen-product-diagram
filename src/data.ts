@@ -17,4 +17,4 @@ export const nodes: DiagramNode[] = [
 ];
 export const appNode: DiagramNode = {id:'app',figmaId:'6256:25233',title:'SG Connect App',description:'Live data, alerts, electricity prices and peak shaving.',x:2040,y:2048,variant:'white',image:'imgScreenshot20260902At1941161',crop:{},cta:'Explore SG Connect App',detail:'The SG Connect App brings together live data, alerts, your electricity prices, peak shaving, time-based control and devices. It connects the optimal plan from SG Brain to dispatch through Synaptic.'};
 export const appFeatures = ['Live data','Alerts','My electricity prices','Peak shaving','Time-based control','Devices'];
-export const diagramBounds = { x: 720, y: 510, width: 3540, height: 3560 };
+export const diagramBounds = { x: 400, y: 510, width: 4180, height: 3789 };

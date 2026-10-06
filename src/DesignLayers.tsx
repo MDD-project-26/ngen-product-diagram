@@ -203,77 +203,61 @@ const DesignLayers = memo(function DesignLayers(){ return <div className="design
           <img alt="" draggable={false} src={imgFrame1171277727} width={16} height={361} />
         </div>
       </div>
-      <div className="design-layer-99" data-node-id="6256:25079" data-name="Tag">
-        <p className="design-layer-100 material-symbol" data-node-id="I6256:25079;1335:21022" style={{ fontVariationSettings: '"FILL" 0, "GRAD" 0' }}>
-          partly_cloudy_day
-        </p>
-        <p className="design-layer-101" data-node-id="I6256:25079;1335:20990">
-          Weather
-        </p>
-      </div>
-      <div className="design-layer-102" data-node-id="6256:25075">
-        <div className="design-layer-103">
-          <div className="design-layer-104">
-            <div className="design-layer-105">
-              <img alt="" draggable={false} src={imgFrame1171277728} width={16} height={161} />
+      <div className="design-layer-99" data-node-id="6256:25075">
+        <div className="design-layer-100">
+          <div className="design-layer-101">
+            <div className="design-layer-102">
+              <img alt="" draggable={false} src={imgFrame1171277728} width={16} height={41} />
             </div>
           </div>
         </div>
       </div>
-      <div className="design-layer-107" data-node-id="6256:25090" data-name="Tag">
-        <p className="design-layer-108 material-symbol" data-node-id="I6256:25090;1335:21022" style={{ fontVariationSettings: '"FILL" 0, "GRAD" 0' }}>
-          euro_symbol
-        </p>
-        <p className="design-layer-109" data-node-id="I6256:25090;1335:20990">
-          Prices
-        </p>
-      </div>
-      <div className="design-layer-110" data-node-id="6256:25085">
-        <div className="design-layer-111">
-          <div className="design-layer-112">
-            <div className="design-layer-113">
-              <img alt="" draggable={false} src={imgFrame1171277728} width={16} height={161} />
+      <div className="design-layer-104" data-node-id="6256:25085">
+        <div className="design-layer-105">
+          <div className="design-layer-106">
+            <div className="design-layer-107">
+              <img alt="" draggable={false} src={imgFrame1171277728} width={16} height={41} />
             </div>
           </div>
         </div>
       </div>
-      <div className="design-layer-115" data-node-id="6327:24683">
-        <p className="design-layer-116" data-node-id="6327:24684">
+      <div className="design-layer-109" data-node-id="6327:24683">
+        <p className="design-layer-110" data-node-id="6327:24684">
           Solar PV
         </p>
-        <div className="design-layer-117" data-node-id="6327:24744" data-name="Imge">
-          <div className="design-layer-118">
-            <img alt="" draggable={false} className="design-layer-119" src={imgImge6} />
+        <div className="design-layer-111" data-node-id="6327:24744" data-name="Imge">
+          <div className="design-layer-112">
+            <img alt="" draggable={false} className="design-layer-113" src={imgImge6} />
           </div>
         </div>
       </div>
-      <div className="design-layer-120" data-node-id="6327:24685">
-        <p className="design-layer-121" data-node-id="6327:24686">
+      <div className="design-layer-114" data-node-id="6327:24685">
+        <p className="design-layer-115" data-node-id="6327:24686">
           Battery
         </p>
-        <div className="design-layer-122" data-node-id="6327:24746" data-name="Imge">
-          <div className="design-layer-123">
-            <img alt="" draggable={false} className="design-layer-124" src={imgImge7} />
+        <div className="design-layer-116" data-node-id="6327:24746" data-name="Imge">
+          <div className="design-layer-117">
+            <img alt="" draggable={false} className="design-layer-118" src={imgImge7} />
           </div>
         </div>
       </div>
-      <div className="design-layer-125" data-node-id="6327:24687">
-        <p className="design-layer-126" data-node-id="6327:24688">
+      <div className="design-layer-119" data-node-id="6327:24687">
+        <p className="design-layer-120" data-node-id="6327:24688">
           Inverter
         </p>
-        <div className="design-layer-127" data-node-id="6327:24748" data-name="Imge">
-          <div className="design-layer-128">
-            <img alt="" draggable={false} className="design-layer-129" src={imgImge8} />
+        <div className="design-layer-121" data-node-id="6327:24748" data-name="Imge">
+          <div className="design-layer-122">
+            <img alt="" draggable={false} className="design-layer-123" src={imgImge8} />
           </div>
         </div>
       </div>
-      <div className="design-layer-130" data-node-id="6327:24689">
-        <p className="design-layer-131" data-node-id="6327:24690">
+      <div className="design-layer-124" data-node-id="6327:24689">
+        <p className="design-layer-125" data-node-id="6327:24690">
           EV Charger
         </p>
-        <div className="design-layer-132" data-node-id="6327:24750" data-name="Imge">
-          <div className="design-layer-133">
-            <img alt="" draggable={false} className="design-layer-134" src={imgImge9} />
+        <div className="design-layer-126" data-node-id="6327:24750" data-name="Imge">
+          <div className="design-layer-127">
+            <img alt="" draggable={false} className="design-layer-128" src={imgImge9} />
           </div>
         </div>
       </div>

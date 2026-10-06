@@ -33,7 +33,7 @@ The production site is in `dist/`, including all artwork and font files. Browser
 
 The module preserves the Development annotations: 24px outer spacing on desktop, a gray canvas occupying the remaining viewport, proportional scaling of the entire diagram, white / green / dark node variants, rearranged text when there is no CTA, and the same Motion timing and easing for tooltip entry and exit. Narrow screens use 16px spacing and a stacked heading.
 
-Source frames: module `6224:24416`, canvas `6225:24706`, node variants `6225:24558`, and tooltip `6335:24637`. Static layers retain the complete Figma connector geometry and all 25 original artwork / SVG assets. They are rendered as elements, never as a canvas screenshot.
+Source frames: module `6224:24416`, canvas `6225:24706`, node variants `6225:24558`, and tooltip `6335:24637`. Static layers retain the complete Figma connector geometry and all 26 original artwork / SVG assets. The updated canvas includes the pale green SG Connect region, its vector logo, the dashed “AT YOUR SITE” boundary, and the repositioned Weather and Prices tags with shortened arrows. They are rendered as elements, never as a canvas screenshot.
 
 - `src/App.tsx`: module, controls, and node tooltips.
 - `src/useFullscreen.ts`: native full-screen mode and an embedded-preview fallback.
